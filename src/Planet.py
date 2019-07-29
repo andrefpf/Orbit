@@ -6,10 +6,10 @@ class Planet(Celestial):
     def __init__(self, x, y):
         color = (50, 100, 200)
         size  = 10
-        mass  = 5
+        mass  = 200
         Celestial.__init__(self, x, y, mass, size, color)
 
-        self.throw_velocity = 2
+        self.throw_velocity = 8
     
     def throw(self, mouse_x, mouse_y):
         x = mouse_x - self.pos_x

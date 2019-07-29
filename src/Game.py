@@ -4,6 +4,7 @@ import math
 from Planet import Planet
 from Star import Star
 from Black_Hole import Black_Hole
+from Neutron_Star import Neutron_Star
 
 class Game:
     def __init__(self, screen):
@@ -20,19 +21,28 @@ class Game:
     def __create_objects(self):
         self.earth = self.__create_earth()
         self.stars = self.__create_stars()
-        # self.black_hole = self.__create_black_hole()
+        self.neutron_stars = self.__create_neutron_stars()
+        self.black_hole = self.__create_black_hole()
 
     def __create_earth(self):
-        pos_x, pos_y = 200, 700
+        pos_x, pos_y = 200, 600
         return Planet(pos_x, pos_y)
     
     def __create_stars(self):
-        stars_position = [(200, 200)]
+        stars_position = []
         stars = []
         for pos in stars_position:
             pos_x, pos_y = pos[0], pos[1]
             stars.append(Star(pos_x, pos_y))
         return stars
+
+    def __create_neutron_stars(self):
+            neutron_stars_position = []
+            neutron_stars = []
+            for pos in neutron_stars_position:
+                pos_x, pos_y = pos[0], pos[1]
+                neutron_stars.append(Neutron_Star(pos_x, pos_y))
+            return neutron_stars
 
     def __create_black_hole(self):
         pos_x, pos_y = 200, 100
@@ -69,8 +79,11 @@ class Game:
 
     def __show(self):
         self.earth.show(self.screen)
-        # self.black_hole.show(self.screen)
+        self.black_hole.show(self.screen)
         for star in self.stars:
+            star.show(self.screen)
+        
+        for star in self.neutron_stars:
             star.show(self.screen)
     
     def __update(self):
@@ -80,7 +93,11 @@ class Game:
         if self.hurled:
             for i in self.stars:
                 self.earth.gravity(i)
-            # self.earth.gravity(self.black_hole)
+            
+            for i in self.neutron_stars:
+                self.earth.gravity(i)
+
+            self.earth.gravity(self.black_hole)
 
     def __set_fps(self):
         pygame.time.Clock().tick(self.FPS)
