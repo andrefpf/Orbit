@@ -1,38 +1,27 @@
+from Celestial import Celestial
+
 import math
 
-class Planet:
-    def __init__(self, x, y, mass, color):
-        self.pos_x = x
-        self.pos_y = y
-        self.color = color
-        self.mass = mass
-        self.size = int(math.sqrt(self.mass))
+class Planet(Celestial):
+    def __init__(self, x, y):
+        color = (50, 100, 200)
+        size  = 10
+        mass  = 5
+        Celestial.__init__(self, x, y, mass, size, color)
 
-        self.velocity_x = 0
-        self.velocity_y = 0
-        self.aceleration_x = 0
-        self.aceleration_y = 0
-
-    def show(self, background, pygame):
-        pygame.draw.circle(background, self.color, [int(self.pos_x), int(self.pos_y)], self.size)
+        self.throw_velocity = 2
     
-    def update(self):
-        self.velocity_x += self.aceleration_x
-        self.velocity_y += self.aceleration_y
-        self.pos_x += self.velocity_x
-        self.pos_y += self.velocity_y
+    def throw(self, mouse_x, mouse_y):
+        x = mouse_x - self.pos_x
+        y = self.pos_y - mouse_y
+        
+        if x == 0:
+            x += 1
+            
+        angulo = math.atan(y/x)
 
-        # print(self.pos_x, self.pos_y)
+        if mouse_x < self.pos_x:
+            angulo += math.pi
 
-    def gravity(self, other):
-        dif_x = other.pos_x - self.pos_x
-        dif_y = other.pos_y -self.pos_y
-        distance = math.sqrt(dif_x**2 + dif_y**2)
-
-        if distance > self.size + other.size:
-            force = self.mass * other.mass / distance ** 2
-            self.aceleration_x = (dif_x / distance) * force / self.mass
-            self.aceleration_y = (dif_y / distance) * force / self.mass
-        else:
-            self.aceleration_x = self.aceleration_y = 0
-            self.velocity_x = self.velocity_y = 0
+        self.velocity_x =  math.cos(angulo) * self.throw_velocity
+        self.velocity_y = -math.sin(angulo) * self.throw_velocity
