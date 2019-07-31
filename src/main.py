@@ -1,9 +1,12 @@
 import pygame
-from Celestial import Celestial
+
+# from Main_Menu import Main_Menu
 from Game import Game
 
 screen = pygame.display.set_mode((400, 700))
 pygame.display.set_caption('orbit')
 running = True
+level = 0
 
-game = Game(screen)
+# menu = Main_Menu(screen)
+game = Game(screen, level)

@@ -4,10 +4,11 @@ import math
 
 class Planet(Celestial):
     def __init__(self, x, y):
-        color = (50, 100, 200)
         size  = 10
         mass  = 200
-        Celestial.__init__(self, x, y, mass, size, color)
+        color = (50, 100, 200)
+        interation_distance = 2
+        Celestial.__init__(self, x, y, mass, size, color, interation_distance)
 
         self.throw_velocity = 8
     
